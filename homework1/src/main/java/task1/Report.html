@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Report for the 1st task</title>
+    <style type="text/css">
+    table {
+     border: 2;
+     rules: rows;
+     cellpadding: 7;
+    }
+    th {
+     background: #ccc;
+     text-align: center;
+    }
+  </style>
+</head>
+<body>
+<h3>What has happened after simple "Map" implementation exchanging?</h3>
+<p><b>HashMap</b> isn’t thread-safe so we have to add thread-safe logic by ourselves. Instead of this <b>ConcurrentHashMap</b>
+    or <b>SynchronizedMap</b> are thread-safe and use locks so in most cases we don’t have to add any additional logic
+    for supporting multithreading when using <b>ConcurrentHashMap/SynchronizedMap</b>.
+<h3>How it can be fixed in code?</h3>
+After replacing <b>HashMap</b> with <b>ConcurrentHashMap</b> or <b>SynchronizedMap</b> we can remove <i>synchronized</i>
+from writer thread but we still need <i>synchronized</i> in the adder thread as it uses the iterator.
+<h3>Measurements</h3>
+<h4>Using JDK8</h4>
+<table bgcolor=#B6F0EF border=2 rules="rows" cellpadding="7">
+    <tr>
+        <th>1_000 values</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>#</td>
+        <td>HashMap</td>
+        <td>synchronizedMap</td>
+        <td>ConcurrentHashMap</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>18</td>
+        <td>6</td>
+        <td>19</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>15</td>
+        <td>12</td>
+        <td>19</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>21</td>
+        <td>12</td>
+        <td>18</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>23</td>
+        <td>12</td>
+        <td>21</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>13</td>
+        <td>14</td>
+        <td>19</td>
+    </tr>
+    <tr>
+        <td>Average</td>
+        <td>18</td>
+        <td>11.2</td>
+        <td>19.2</td>
+    </tr>
+
+    <tr>
+        <th>10_000 values</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>#</td>
+        <td>HashMap</td>
+        <td>synchronizedMap</td>
+        <td>ConcurrentHashMap</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>82</td>
+        <td>74</td>
+        <td>969</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>66</td>
+        <td>67</td>
+        <td>1055</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>92</td>
+        <td>67</td>
+        <td>1061</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>65</td>
+        <td>67</td>
+        <td>1089</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>68</td>
+        <td>77</td>
+        <td>1056</td>
+    </tr>
+    <tr>
+        <td>Average</td>
+        <td>74.6</td>
+        <td>70.4</td>
+        <td>1046</td>
+    </tr>
+
+    <tr>
+        <th>100_000 values</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>#</td>
+        <td>HashMap</td>
+        <td>synchronizedMap</td>
+        <td>ConcurrentHashMap</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>1102</td>
+        <td>796</td>
+        <td>133335</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>3037</td>
+        <td>897</td>
+        <td>154746</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>1500</td>
+        <td>1149</td>
+        <td>137771</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>1842</td>
+        <td>1041</td>
+        <td>141447</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>929</td>
+        <td>1114</td>
+        <td>146435</td>
+    </tr>
+    <tr>
+        <td>Average</td>
+        <td>1682</td>
+        <td>999.4</td>
+        <td>142746.8</td>
+    </tr>
+</table>
+
+<h4>Using JDK11</h4>
+<table bgcolor=#EAB6F0 border=2 rules="rows" cellpadding="7">
+    <tr>
+        <th>1_000 values</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>#</td>
+        <td>HashMap</td>
+        <td>synchronizedMap</td>
+        <td>ConcurrentHashMap</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>29</td>
+        <td>22</td>
+        <td>28</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>26</td>
+        <td>26</td>
+        <td>29</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>18</td>
+        <td>13</td>
+        <td>39</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>22</td>
+        <td>23</td>
+        <td>34</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>25</td>
+        <td>29</td>
+        <td>32</td>
+    </tr>
+    <tr>
+        <td>Average</td>
+        <td>24</td>
+        <td>22.6</td>
+        <td>32.4</td>
+    </tr>
+
+    <tr>
+        <th>10_000 values</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>#</td>
+        <td>HashMap</td>
+        <td>synchronizedMap</td>
+        <td>ConcurrentHashMap</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>134</td>
+        <td>110</td>
+        <td>1122</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>148</td>
+        <td>109</td>
+        <td>1013</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>193</td>
+        <td>104</td>
+        <td>1127</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>76</td>
+        <td>131</td>
+        <td>766</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>123</td>
+        <td>90</td>
+        <td>945</td>
+    </tr>
+    <tr>
+        <td>Average</td>
+        <td>134.8</td>
+        <td>108.8</td>
+        <td>994.6</td>
+    </tr>
+
+    <tr>
+        <th>100_000 values</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>#</td>
+        <td>HashMap</td>
+        <td>synchronizedMap</td>
+        <td>ConcurrentHashMap</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>1950</td>
+        <td>724</td>
+        <td>213832</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>1852</td>
+        <td>1190</td>
+        <td>181841</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>1988</td>
+        <td>1226</td>
+        <td>187488</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>2478</td>
+        <td>1145</td>
+        <td>189134</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>5944</td>
+        <td>996</td>
+        <td>191032</td>
+    </tr>
+    <tr>
+        <td>Average</td>
+        <td>2842.4</td>
+        <td>1056.2</td>
+        <td>192665.4</td>
+    </tr>
+</table>
+
+<h4>Using JDK17</h4>
+<table bgcolor=#CCF0B6  border=2 rules="rows" cellpadding="7">
+    <tr>
+        <th>1_000 values</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>#</td>
+        <td>HashMap</td>
+        <td>synchronizedMap</td>
+        <td>ConcurrentHashMap</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>15</td>
+        <td>15</td>
+        <td>77</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>14</td>
+        <td>14</td>
+        <td>77</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>13</td>
+        <td>14</td>
+        <td>58</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>16</td>
+        <td>18</td>
+        <td>77</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>14</td>
+        <td>20</td>
+        <td>75</td>
+    </tr>
+    <tr>
+        <td>Average</td>
+        <td>14.4</td>
+        <td>16.2</td>
+        <td>72.8</td>
+    </tr>
+
+    <tr>
+        <th>10_000 values</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>#</td>
+        <td>HashMap</td>
+        <td>synchronizedMap</td>
+        <td>ConcurrentHashMap</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>63</td>
+        <td>68</td>
+        <td>931</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>66</td>
+        <td>68</td>
+        <td>878</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>80</td>
+        <td>83</td>
+        <td>730</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>54</td>
+        <td>70</td>
+        <td>791</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>76</td>
+        <td>68</td>
+        <td>961</td>
+    </tr>
+    <tr>
+        <td>Average</td>
+        <td>67.8</td>
+        <td>71.4</td>
+        <td>858.2</td>
+    </tr>
+
+    <tr>
+        <th>100_000 values</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>#</td>
+        <td>HashMap</td>
+        <td>synchronizedMap</td>
+        <td>ConcurrentHashMap</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>801</td>
+        <td>1126</td>
+        <td>119775</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>830</td>
+        <td>855</td>
+        <td>121565</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>805</td>
+        <td>1121</td>
+        <td>16914</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>1019</td>
+        <td>1052</td>
+        <td>128561</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>764</td>
+        <td>2038</td>
+        <td>132935</td>
+    </tr>
+    <tr>
+        <td>Average</td>
+        <td>843.8</td>
+        <td>1238.4</td>
+        <td>123950</td>
+    </tr>
+</table>
+</body>
+</html>
