@@ -1,0 +1,20 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}"lang="en">
+<head>
+    <link rel="stylesheet" href="site.css">
+    <title>Error</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="container main-content">
+        <ul class="list-group">
+            <div class="list-group-item-danger" th:text="${error}">Status</div>
+            <div class="list-group-item" th:text="'Status code: '+ ${status}">Error message:</div>
+        </ul>
+        <p><a href="/" th:href="@{/}">Back to home page</a></p>
+    </div>
+</div>
+
+</body>
+</html>

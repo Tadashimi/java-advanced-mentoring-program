@@ -1,0 +1,32 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}"lang="en">
+<head>
+    <link rel="stylesheet" href="site.css">
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<h1>Hello, ANONYMOUS</h1>
+<p>Please login<p>
+<form name='f' action="login" method='POST'>
+    <div th:if="${param.error}">
+        <div class="alert alert-danger">
+            <h4>Invalid username or password</h4>
+        </div>
+    </div>
+    <table>
+        <tr>
+            <td>Email:</td>
+            <td><input type='text' name='username' value=''></td>
+        </tr>
+        <tr>
+            <td>Password:</td>
+            <td><input type='password' name='password' /></td>
+        </tr>
+        <tr>
+            <td><input name="submit" type="submit" value="Login" /></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

@@ -1,0 +1,78 @@
+body {
+  background-color: lightblue;
+}
+
+h1 {
+  color: navy;
+  margin-left: 20px;
+}
+
+h3 {
+  padding-top: 20px;
+  color: black;
+}
+
+h4 {
+  padding-top: 10px;
+  color: red;
+}
+
+a {
+  font-style: italic;
+}
+
+.main-content{
+    padding-top: 20px;
+}
+
+.container{
+    border: 5px solid darkblue;
+    border-radius: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.row{
+   background-color: lightyellow;
+}
+
+.table{
+   border: 1px solid darkblue;
+   margin-top: 15px;
+   margin-bottom: 15px;
+}
+
+.blocked {
+   padding-top: 20px;
+   color: red;
+   font-weight: bolder;
+}
+
+.alert {
+   padding-top: 20px;
+   color: red;
+}
+
+.list-group{
+
+}
+
+.list-group-item{
+   padding-top: 10px;
+   color: darkred;
+   font-style: italic;
+}
+
+.list-group-item-danger {
+    padding-top: 10px;
+    color: darkred;
+    font-weight: bolder;
+}
+
+.form-row{
+    padding-top: 8px;
+}
+
+.alert alert-danger {
+    color: #FF0000;
+}
