@@ -5,6 +5,10 @@ To verify that all works fine you can use [Postman collection "SecretProvider" t
 To create docker image you can run spring-boot:build-image command.
 
 As a result you can see:
-![Alt text](DockerBuild.png?raw=true "Title")
+![Result of build-image command](DockerBuild.png?raw=true "Building Docker Image")
 
-After successful building we can login in in Docker and post our image to Docker Hub.
+You can check the image running docker images command or using Docker Desktop (in case if you use Windows):
+![Image in Docker Desktop Images tab](DockerImages.png?raw=true "Docker Images in Docker Desktop")
+
+
+After successful building we can login in Docker and post our image to Docker Hub.
