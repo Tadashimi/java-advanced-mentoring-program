@@ -23,7 +23,7 @@ public class KafkaProducer {
     private KafkaTemplate<String, GenericRecord> kafkaTemplate;
 
     public void sendMessage(String msg) {
-        LOGGER.info(String.format("$$$$ => Producing message: %s schema version: %s", msg));
+        LOGGER.info(String.format("$$$$ => Producing message: %s", msg));
         GenericRecord record = new GenericData.Record(SCHEMA);
         record.put(0, "1");
         record.put(1, msg);
