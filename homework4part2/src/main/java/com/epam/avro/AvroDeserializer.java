@@ -1,27 +1,27 @@
 package com.epam.avro;
 
-import com.epam.schemas.SchemaRepository;
+import com.epam.schemas.SchemaEnum;
 import org.apache.avro.Schema;
 import org.apache.avro.file.DataFileReader;
 import org.apache.avro.file.SeekableByteArrayInput;
 import org.apache.avro.generic.GenericDatumReader;
-import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.io.DatumReader;
 import org.apache.kafka.common.serialization.Deserializer;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-public class AvroDeserializer implements Deserializer {
-
-    private static final Schema SCHEMA = new Schema.Parser().parse(SchemaRepository.getSchema());
+@Component
+public class AvroDeserializer implements Deserializer<String> {
 
     @Override
-    public Object deserialize(String s, byte[] bytes) {
-        DatumReader<GenericRecord> datumReader = new GenericDatumReader<>(SCHEMA);
+    public String deserialize(String schemaId, byte[] bytes) {
+        Schema selectedSchema = new Schema.Parser().parse(SchemaEnum.valueOf(schemaId).getSchemaString());
+        DatumReader<String> datumReader = new GenericDatumReader<>(selectedSchema);
         SeekableByteArrayInput arrayInput = new SeekableByteArrayInput(bytes);
-        GenericRecord record = null;
+        String record = null;
 
-        DataFileReader<GenericRecord> dataFileReader = null;
+        DataFileReader<String> dataFileReader = null;
         try {
             dataFileReader = new DataFileReader<>(arrayInput, datumReader);
             if (dataFileReader.hasNext()) {
